@@ -1,8 +1,10 @@
-#include "Zgadywarka.h"
+#include "stdafx.h"
+#include "FLTK_View.h"
+#include "FLTK_View.h"
 #include <string>
 
 int main(int argc, char** argv) {
-	auto System = Zgadywarka_Controller(argc, argv);
-	System.play();
-	System.print();
+	FLTK_View FLTK(argc, argv);
+	FLTK.show();
+	return Fl::run();
 }

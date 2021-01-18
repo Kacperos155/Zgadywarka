@@ -1,11 +1,13 @@
+#include "stdafx.h"
 #include "Zgadywarka.h"
 
 Zgadywarka_Controller::Zgadywarka_Controller()
-	:ZL(), argv(), number_to_guess(0), limit(0) {}
+	:ZL(), number_to_guess(0), limit(0) {}
 
 Zgadywarka_Controller::Zgadywarka_Controller(const int argc, char** const argv_)
-	: ZL(), argv(argv_, argv_ + argc), number_to_guess(0), limit(0)
+	: ZL(), number_to_guess(0), limit(0)
 {
+	const std::vector<std::string> argv(argv_, argv_ + argc);
 	if (argv.size() >= 2) {
 		try {
 			number_to_guess = std::stoull(argv[1]);
@@ -27,14 +29,11 @@ Zgadywarka_Controller::Zgadywarka_Controller(const int argc, char** const argv_)
 	}
 }
 
-Zgadywarka_Logic& Zgadywarka_Controller::getLogic()
-{
-	return ZL;
-}
-
 void Zgadywarka_Controller::print()
 {
-	std::cout << "Liczba do zgadniecia: " << ZL.getLastGuessedNumber() << "\n";
+	log = std::stringstream();
+	log << "Liczba do zgadniecia: " << ZL.getLastGuessedNumber() << "\n";
+	log << "Limit: " << ZL.getLastLimit() << "\n";
 	unsigned long long max_turns = 0;
 	for (auto&& u : ZL.getUsers()) {
 		if (u->getLog().size() > max_turns)
@@ -42,27 +41,58 @@ void Zgadywarka_Controller::print()
 	}
 
 	for (unsigned long long i = 0; i < max_turns; ++i) {
-		std::cout << "-- Tura: " << i + 1 << "\n";
+		log << "-- Tura: " << i + 1 << "\n";
+
+		unsigned short max_chars = 0;
 		for (auto&& u : ZL.getUsers()) {
-			if (u->getLog().size() == (i + 1)) {
-				std::cout << u->getName() << "\t odgadl liczbe " << u->getLog()[i] << " !\n";
-			}
-			else if (u->getLog().size() > i) {
-				std::cout << u->getName() << "\t zgaduje " << u->getLog()[i] << "\n";
+			if (max_chars < u->getName().size())
+				max_chars = static_cast<unsigned short>(u->getName().size());
+		}
+
+		for (auto&& u : ZL.getUsers()) {
+			if (u->getLog().size() >= (i + 1)) {
+				log.width(max_chars);
+				log << std::left << u->getName();
+				log.width(0);
+				log << "\t";
+
+				if (u->getLog().size() == (i + 1)) {
+					if (ZL.getLastGuessedNumber() == u->getLog()[i])
+						log << " odgadl liczbe " << u->getLog()[i] << " !\n";
+					else
+						log << " przekroczyl czas !\n";
+				}
+				else if (u->getLog().size() > i) 
+					log << " zgaduje " << u->getLog()[i] << "\n";
 			}
 		}
-		std::cout << "\n";
+		log << "\n";
 	}
 }
 
-void Zgadywarka_Controller::play()
+bool Zgadywarka_Controller::play(unsigned long long number_to_guess, unsigned long long limit)
+{
+	this->number_to_guess = number_to_guess;
+	this->limit = limit;
+	return play();
+}
+
+bool Zgadywarka_Controller::play()
 {
 	ZL.clearUsers();
-	if (number_to_guess == 0)
-		return;
 
 	ZL.addUser(User_Type::Binary_Search, "Binarek");
 	ZL.addUser(User_Type::C_Rand, "Stary Lotek");
 	ZL.addUser(User_Type::Random_MT19937, "Suprandom");
-	ZL.play(limit, number_to_guess);
+
+	if (ZL.play(number_to_guess, limit)) {
+		print();
+		return true;
+	}
+	return false;
+}
+
+const std::stringstream& Zgadywarka_Controller::getLog() const
+{
+	return log;
 }
