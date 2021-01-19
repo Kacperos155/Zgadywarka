@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Binary_Random_User.h" />
     <ClInclude Include="Binary_Search_User.h" />
     <ClInclude Include="C_Rand_User.h" />
     <ClInclude Include="Random_User.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="Zgadywarka_Logic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Binary_Random_User.cpp" />
     <ClCompile Include="Binary_Search_User.cpp" />
     <ClCompile Include="C_Rand_User.cpp" />
     <ClCompile Include="Random_User.cpp" />

@@ -3,6 +3,7 @@
 #include "Binary_Search_User.h"
 #include "C_Rand_User.h"
 #include "Random_User.h"
+#include "Binary_Random_User.h"
 #include <vector>
 #include <memory>
 #include <limits>
@@ -10,7 +11,8 @@
 enum class User_Type {
 	Binary_Search,
 	C_Rand,
-	Random_MT19937
+	Random_MT19937,
+	Binary_Random
 };
 
 class Zgadywarka_Logic

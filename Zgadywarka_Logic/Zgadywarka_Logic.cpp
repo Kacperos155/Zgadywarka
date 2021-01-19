@@ -79,6 +79,8 @@ Zgadywarka_Logic& Zgadywarka_Logic::addUser(User_Type ut, std::string name)
 		Users.emplace_back(std::make_unique<C_Rand_User>(name, &comms));
 	else if (ut == User_Type::Random_MT19937)
 		Users.emplace_back(std::make_unique<Random_User>(name, &comms));
+	else if (ut == User_Type::Binary_Random)
+		Users.emplace_back(std::make_unique<Binary_Random_User>(name, &comms));
 	return *this;
 }
 

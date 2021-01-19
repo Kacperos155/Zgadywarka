@@ -82,8 +82,9 @@ bool Zgadywarka_Controller::play()
 	ZL.clearUsers();
 
 	ZL.addUser(User_Type::Binary_Search, "Binarek");
-	ZL.addUser(User_Type::C_Rand, "Stary Lotek");
+	ZL.addUser(User_Type::Binary_Random, "Binarandek");
 	ZL.addUser(User_Type::Random_MT19937, "Suprandom");
+	ZL.addUser(User_Type::C_Rand, "Stary Lotek");
 
 	if (ZL.play(number_to_guess, limit)) {
 		print();
