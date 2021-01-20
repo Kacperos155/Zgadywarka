@@ -32,38 +32,49 @@ Zgadywarka_Controller::Zgadywarka_Controller(const int argc, char** const argv_)
 void Zgadywarka_Controller::print()
 {
 	log = std::stringstream();
-	log << "Liczba do zgadniecia: " << ZL.getLastGuessedNumber() << "\n";
-	log << "Limit: " << ZL.getLastLimit() << "\n";
 	unsigned long long max_turns = 0;
+	unsigned short max_chars = 0;
+	auto printUser = [&](const std::unique_ptr<User>& u) {
+		log.width(max_chars);
+		log << std::left << u->getName();
+		log.width(0);
+		log << "\t";
+	};
+
+	//Geting max values
 	for (auto&& u : ZL.getUsers()) {
 		if (u->getLog().size() > max_turns)
 			max_turns = u->getLog().size();
+		if (max_chars < u->getName().size())
+			max_chars = static_cast<unsigned short>(u->getName().size());
 	}
 
-	for (unsigned long long i = 0; i < max_turns; ++i) {
-		log << "-- Tura: " << i + 1 << "\n";
+	//Short log
+	log << "Number to guess: " << ZL.getLastGuessedNumber() << "\n";
+	log << "From 1 to " << ZL.getLastLimit() - 1 << "\n\n";
 
-		unsigned short max_chars = 0;
-		for (auto&& u : ZL.getUsers()) {
-			if (max_chars < u->getName().size())
-				max_chars = static_cast<unsigned short>(u->getName().size());
-		}
+	for (auto&& u : ZL.getUsers()) {
+		printUser(u);
+		log << " finished in " << u->getLog().size() << " turns.\n";
+	}
+	log << "--------------------------------------------------\n";
+
+	//Detailed log
+	for (unsigned long long i = 0; i < max_turns; ++i) {
+		log << "* Turn: " << i + 1 << " *\n";
 
 		for (auto&& u : ZL.getUsers()) {
 			if (u->getLog().size() >= (i + 1)) {
-				log.width(max_chars);
-				log << std::left << u->getName();
-				log.width(0);
-				log << "\t";
+				printUser(u);
 
 				if (u->getLog().size() == (i + 1)) {
 					if (ZL.getLastGuessedNumber() == u->getLog()[i])
-						log << " odgadl liczbe " << u->getLog()[i] << " !\n";
+						log << " guessed number " << u->getLog()[i] << " !\n";
 					else
-						log << " przekroczyl czas !\n";
+						log << " time out !\n";
 				}
-				else if (u->getLog().size() > i) 
-					log << " zgaduje " << u->getLog()[i] << "\n";
+				else if (u->getLog().size() > i)
+					log << " is guessing " << u->getLog()[i] << "\n";
 			}
 		}
 		log << "\n";
@@ -81,10 +92,10 @@ bool Zgadywarka_Controller::play()
 {
 	ZL.clearUsers();
 
-	ZL.addUser(User_Type::Binary_Search, "Binarek");
-	ZL.addUser(User_Type::Binary_Random, "Binarandek");
-	ZL.addUser(User_Type::Random_MT19937, "Suprandom");
-	ZL.addUser(User_Type::C_Rand, "Stary Lotek");
+	ZL.addUser(User_Type::Binary_Search, "Binary");
+	ZL.addUser(User_Type::Binary_Random, "Binarandom");
+	ZL.addUser(User_Type::Random_MT19937, "Random C++");
+	ZL.addUser(User_Type::C_Rand, "Random C");
 
 	if (ZL.play(number_to_guess, limit)) {
 		print();
