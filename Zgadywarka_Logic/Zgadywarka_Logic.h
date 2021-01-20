@@ -4,15 +4,17 @@
 #include "C_Rand_User.h"
 #include "Random_User.h"
 #include "Binary_Random_User.h"
+#include "Exponential_Search_User.h"
 #include <vector>
 #include <memory>
 #include <limits>
 
 enum class User_Type {
-	Binary_Search,
-	C_Rand,
-	Random_MT19937,
-	Binary_Random
+	C_Rand = 1,
+	Random_MT19937 = 2,
+	Binary_Search = 4,
+	Binary_Random = 8,
+	Exponential_Search = 16
 };
 
 class Zgadywarka_Logic

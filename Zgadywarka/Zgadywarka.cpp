@@ -96,6 +96,7 @@ bool Zgadywarka_Controller::play()
 	ZL.addUser(User_Type::Binary_Random, "Binarandom");
 	ZL.addUser(User_Type::Random_MT19937, "Random C++");
 	ZL.addUser(User_Type::C_Rand, "Random C");
+	ZL.addUser(User_Type::Exponential_Search, "Exponential");
 
 	if (ZL.play(number_to_guess, limit)) {
 		print();

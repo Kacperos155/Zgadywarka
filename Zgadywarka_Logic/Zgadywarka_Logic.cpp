@@ -81,6 +81,8 @@ Zgadywarka_Logic& Zgadywarka_Logic::addUser(User_Type ut, std::string name)
 		Users.emplace_back(std::make_unique<Random_User>(name, &comms));
 	else if (ut == User_Type::Binary_Random)
 		Users.emplace_back(std::make_unique<Binary_Random_User>(name, &comms));
+	else if (ut == User_Type::Exponential_Search)
+		Users.emplace_back(std::make_unique<Exponential_Search_User>(name, &comms));
 	return *this;
 }
 

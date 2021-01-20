@@ -5,9 +5,9 @@ class User_Communication
 {
 public:
 	enum class Answer {
+		Guessed,
 		Smaller,
-		Bigger,
-		Guessed
+		Bigger
 	};
 
 	unsigned short register_user();
