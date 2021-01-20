@@ -16,6 +16,8 @@ protected:
 	const unsigned short ID;
 	std::vector<unsigned long long> log;
 
+	void binary_search();
+
 public:
 	User(const std::string name, User_Communication* const comms);
 	const unsigned short getID() const;

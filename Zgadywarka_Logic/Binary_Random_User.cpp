@@ -18,7 +18,7 @@ void Binary_Random_User::guess()
 		Random_User::guess();
 	}
 	else {
-		guess_result = (lower_range + upper_range + 1) / 2;
+		binary_search();
 		User::guess();
 	}
 }

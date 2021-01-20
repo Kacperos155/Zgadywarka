@@ -3,6 +3,17 @@
 User::User(const std::string name, User_Communication* const comms)
 	:name(name), comms(comms), ID(comms->register_user()) {}
 
+void User::binary_search()
+{
+	auto last_result = guess_result;
+	guess_result = 0;
+	guess_result += lower_range / 2;
+	guess_result += upper_range / 2;
+
+	if (last_result == guess_result)
+		++guess_result;
+}
+
 const unsigned short User::getID() const
 {
 	return ID;
