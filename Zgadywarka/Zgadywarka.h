@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "Zgadywarka_Logic.h"
+#include "../Zgadywarka_Logic/Zgadywarka_Logic.h"
 #include <iostream>
 #include <sstream>
 
