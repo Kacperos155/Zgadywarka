@@ -6,4 +6,4 @@ This is rework of my first object-oriented C++ project, made to compare few meth
 ## Building/Dependecies
 In this repository you find **Visual Studio** project configured to use **vcpkg static** libraries.
 
-The only dependency is **wxWidgets** vcpkg port (x64-windows-static).
+The only dependency is **FLTK** vcpkg port (x64-windows-static).
