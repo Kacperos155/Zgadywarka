@@ -18,10 +18,10 @@
     <ClInclude Include="Zgadywarka.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FLTK_View.h">
+    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="wxWidgets_View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClCompile Include="Zgadywarka.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FLTK_View.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="wxWidgets_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

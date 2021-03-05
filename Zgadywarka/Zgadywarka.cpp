@@ -31,14 +31,15 @@ Zgadywarka_Controller::Zgadywarka_Controller(const int argc, char** const argv_)
 
 void Zgadywarka_Controller::print()
 {
+	summary = std::stringstream();
 	log = std::stringstream();
 	unsigned long long max_turns = 0;
 	unsigned short max_chars = 0;
-	auto printUser = [&](const std::unique_ptr<User>& u) {
-		log.width(max_chars);
-		log << std::left << u->getName();
-		log.width(0);
-		log << "\t";
+	auto printUser = [&](std::stringstream& ss, const std::unique_ptr<User>& u) {
+		ss.width(max_chars);
+		ss << std::left << u->getName();
+		ss.width(0);
+		ss << "\t";
 	};
 
 	//Geting max values
@@ -48,16 +49,16 @@ void Zgadywarka_Controller::print()
 		if (max_chars < u->getName().size())
 			max_chars = static_cast<unsigned short>(u->getName().size());
 	}
+	max_chars += 5;
 
 	//Short log
-	log << "Number to guess: " << ZL.getLastGuessedNumber() << "\n";
-	log << "From 1 to " << ZL.getLastLimit() - 1 << "\n\n";
+	summary << "Number to guess: " << ZL.getLastGuessedNumber() << "\n";
+	summary << "From 1 to " << ZL.getLastLimit() - 1 << "\n\n";
 
 	for (auto&& u : ZL.getUsers()) {
-		printUser(u);
-		log << " finished in " << u->getLog().size() << " turns.\n";
+		printUser(summary, u);
+		summary << " finished in " << u->getLog().size() << " turns.\n";
 	}
-	log << "--------------------------------------------------\n";
 
 	//Detailed log
 	for (unsigned long long i = 0; i < max_turns; ++i) {
@@ -65,7 +66,7 @@ void Zgadywarka_Controller::print()
 
 		for (auto&& u : ZL.getUsers()) {
 			if (u->getLog().size() >= (i + 1)) {
-				printUser(u);
+				printUser(log, u);
 
 				if (u->getLog().size() == (i + 1)) {
 					if (ZL.getLastGuessedNumber() == u->getLog()[i])
@@ -103,6 +104,11 @@ bool Zgadywarka_Controller::play()
 		return true;
 	}
 	return false;
+}
+
+const std::stringstream& Zgadywarka_Controller::getSummary() const
+{
+	return summary;
 }
 
 const std::stringstream& Zgadywarka_Controller::getLog() const

@@ -10,7 +10,9 @@ class Zgadywarka_Controller
 	unsigned long long
 		number_to_guess,
 		limit;
-	std::stringstream log;
+	std::stringstream
+		summary,
+		log;
 	void print();
 
 public:
@@ -18,6 +20,7 @@ public:
 	[[deprecated]] Zgadywarka_Controller(const int argc, char** const argv_);
 	bool play(unsigned long long number_to_guess, unsigned long long limit);
 	bool play();
+	const std::stringstream& getSummary() const;
 	const std::stringstream& getLog() const;
 };
 
