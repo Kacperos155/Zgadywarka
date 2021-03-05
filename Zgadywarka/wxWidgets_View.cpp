@@ -32,7 +32,7 @@ void wxWidgets_View::MainFrame::guess_and_print(wxCommandEvent&)
 }
 
 wxWidgets_View::MainFrame::MainFrame()
-	: wxFrame(nullptr, wxID_ANY, "Hello World")
+	: wxFrame(nullptr, wxID_ANY, "Zgadywarka")
 {
 	int_validator.SuppressBellOnError(true);
 	summary_output->SetMinSize(wxSize(300,150));
